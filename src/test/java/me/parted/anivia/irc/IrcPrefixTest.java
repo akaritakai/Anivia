@@ -19,7 +19,7 @@ public class IrcPrefixTest {
 
     @Test
     public void testNullServerName() throws Exception {
-        exception.expect(NullPointerException.class);
+        exception.expect(IllegalArgumentException.class);
         new IrcPrefix(null);
     }
 
@@ -31,7 +31,7 @@ public class IrcPrefixTest {
 
     @Test
     public void testNullNickname() throws Exception {
-        exception.expect(NullPointerException.class);
+        exception.expect(IllegalArgumentException.class);
         new IrcPrefix(null, "anything", "anything");
     }
 

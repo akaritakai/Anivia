@@ -33,13 +33,13 @@ public class IrcMessageTest {
 
     @Test
     public void testNullTagList() throws Exception {
-        exception.expect(NullPointerException.class);
+        exception.expect(IllegalArgumentException.class);
         new IrcMessage(null, ircPrefix, "SOMECMD", " :Some params");
     }
 
     @Test
     public void testNullCommand() throws Exception {
-        exception.expect(NullPointerException.class);
+        exception.expect(IllegalArgumentException.class);
         new IrcMessage(getNonEmptyIrcTagList(), ircPrefix, null, " :Some params");
     }
 

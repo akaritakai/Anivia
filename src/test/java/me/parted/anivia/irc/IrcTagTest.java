@@ -16,7 +16,7 @@ public class IrcTagTest {
 
     @Test
     public void testNullKey() throws Exception {
-        exception.expect(NullPointerException.class);
+        exception.expect(IllegalArgumentException.class);
         new IrcTag(null, "anything");
     }
 
