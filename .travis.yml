@@ -3,3 +3,4 @@ jdk:
   - oraclejdk8
 script: gradle check
 install: gradle assemble
+after_success: gradle jacocoTestReport coveralls
