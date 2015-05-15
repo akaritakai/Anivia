@@ -56,13 +56,15 @@ public class IrcMessageReader {
         char[] data = raw.toCharArray();
         int cs, p = 0, pe = data.length, eof = data.length;
         int s = p; // current index
+		int q = p; // section start
 
         %%{
             machine irc;
 
+			action sectionstart { q = p; }
             action bufferstart { s = p; }
             action checksize {
-                if (p - s > 512) {
+                if (p - q > 512) {
                     return null;
                 }
             }
@@ -142,8 +144,8 @@ public class IrcMessageReader {
             trailing   = ( ':' | ' ' | nospcrlfcl )*;
             params     = ( (' ' middle){,14} (' :' trailing)? ) >bufferstart %params;
             crlf       = '\r\n';
-            message1   = ( '@' tags ' ' )? >bufferstart %checksize;
-            message2   = ( ':' prefix ' ' )? command ( params )? crlf >bufferstart %checksize;
+            message1   = ( '@' tags ' ' )? >sectionstart $checksize;
+            message2   = ( ':' prefix ' ' )? command ( params )? crlf >sectionstart $checksize;
             message    = message1 message2;
             main      := message %message;
 
